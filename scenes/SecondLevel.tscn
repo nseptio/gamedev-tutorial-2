@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://hvrr7d6fku50"]
+
+[ext_resource type="Script" path="res://scenes/PlatformBlue.gd" id="1_2up0p"]
+[ext_resource type="PackedScene" uid="uid://81iguj7ls1c1" path="res://scenes/SnowPlatform.tscn" id="2_cceru"]
+[ext_resource type="PackedScene" uid="uid://dmymrbq8alrsq" path="res://scenes/GreenShip.tscn" id="3_cnj8m"]
+[ext_resource type="Script" path="res://scenes/ObjectiveArea.gd" id="4_c8r22"]
+[ext_resource type="Script" path="res://scenes/Deadzone.gd" id="5_fqrxq"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(138.75, 79)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sptnh"]
+size = Vector2(1311, 81)
+
+[node name="SecondLevel" type="Node"]
+
+[node name="PlatformWhite" type="Node2D" parent="."]
+position = Vector2(999, 567)
+script = ExtResource("1_2up0p")
+
+[node name="StonePlatform" parent="PlatformWhite" instance=ExtResource("2_cceru")]
+
+[node name="StonePlatform2" parent="PlatformWhite" instance=ExtResource("2_cceru")]
+position = Vector2(72, 0)
+
+[node name="GreenShip" parent="." instance=ExtResource("3_cnj8m")]
+position = Vector2(1032, 466)
+
+[node name="ObjectiveArea" type="Area2D" parent="."]
+position = Vector2(964, 2)
+script = ExtResource("4_c8r22")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObjectiveArea"]
+position = Vector2(70.625, 40)
+shape = SubResource("1")
+
+[node name="DeadzoneArea" type="Area2D" parent="."]
+position = Vector2(-57, 668)
+script = ExtResource("5_fqrxq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadzoneArea"]
+position = Vector2(645.5, 30.5)
+shape = SubResource("RectangleShape2D_sptnh")
+one_way_collision_margin = 0.0
+
+[connection signal="body_entered" from="ObjectiveArea" to="ObjectiveArea" method="_on_ObjectiveArea_body_entered"]
